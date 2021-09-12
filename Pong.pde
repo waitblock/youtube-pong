@@ -1,5 +1,6 @@
 Paddle left = new Paddle(30, 300, 20, 120);
 Paddle right = new Paddle(770, 300, 20, 120);
+Ball ball = new Ball(400, 300, 50, 50);
 
 boolean wKey, sKey, upKey, downKey;
 
@@ -12,9 +13,11 @@ void draw(){
   
   left.display();
   right.display();
+  ball.display();
   
   left.moveWS();
   right.moveArrow();
+  ball.move();
 }
 
 void keyPressed(){
@@ -44,6 +47,44 @@ void keyReleased(){
   }
   if(keyCode == DOWN){
     downKey = false;
+  }
+}
+
+class Ball {
+  int x, y;
+  int initialX, initialY;
+  int ballWidth;
+  int ballHeight;
+  int xVelocity = 5;
+  int yVelocity = 5;
+  final int displacement = 15;
+  
+  Ball(int initialX, int initialY, int ballWidth, int ballHeight){
+    this.initialX = initialX;
+    this.initialY = initialY;
+    this.ballWidth = ballWidth;
+    this.ballHeight = ballHeight;
+    x = initialX;
+    y = initialY;
+  }
+  
+  void display(){
+    noStroke();
+    fill(255);
+    ellipseMode(CENTER);
+    ellipse(x, y, ballWidth, ballHeight);
+  }
+  
+  void move(){
+    x += xVelocity;
+    y += yVelocity;
+    
+    if(x > width - ballWidth + displacement || x < ballWidth - displacement){
+      xVelocity *= -1;
+    }
+    if(y > height - ballHeight + displacement || y < ballHeight - displacement){
+      yVelocity *= -1;
+    }
   }
 }
 
